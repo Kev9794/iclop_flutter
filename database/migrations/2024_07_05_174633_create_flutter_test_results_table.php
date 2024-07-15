@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('success_tests');
             $table->longText('failed_tests');
             $table->string('score');
+            $table->string('flutterid');
             $table->timestamps();
         });
     }

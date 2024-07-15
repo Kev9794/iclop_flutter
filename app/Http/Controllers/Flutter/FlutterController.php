@@ -69,7 +69,7 @@ class FlutterController extends Controller
         $topicsCount = count($topics);
         $detailCount = ($topicsCount / $topicsCount) * 10;
 
-        $flutterTestResults = FlutterTestResult::where('user_id', $idUser)->first();
+        $flutterTestResults = FlutterTestResult::where('user_id', $idUser)->where('flutterid', $flutterid)->first();
 
         return view('flutter.student.material.topics_detail', [
             'row'        => $detail,
@@ -170,6 +170,7 @@ class FlutterController extends Controller
             'success_tests' => $request->success_tests,
             'failed_tests' => $request->failed_tests,
             'score' => $request->score,
+            'flutterid' => $request->flutterid,
         ]);
 
         // Jika ingin memberikan respons atau melakukan sesuatu setelah penyimpanan

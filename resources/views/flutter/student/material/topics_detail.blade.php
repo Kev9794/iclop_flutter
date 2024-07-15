@@ -555,6 +555,10 @@
     
     <script>
     $(document).ready(function() {
+
+        // tolong ambilkan url saat ini dan ambil flutterid tanpa &start
+        
+
         $('#submitButton').click(function(event) {
             event.preventDefault();
 
@@ -562,13 +566,19 @@
             const csrfToken = $('meta[name="csrf-token"]').attr('content');
             const resultsDiv = $('.texts'); // Memastikan Anda memiliki div dengan kelas 'texts' di HTML Anda
             let resultData = {};
+            // tolong ambilkan flutterid dari url http://127.0.0.1:8000/flutter/detail-topics?flutterid=8&start=44
+            const urlParams = new URLSearchParams(window.location.search);
+            const flutterid = String(urlParams.get('flutterid'));
+            console.log(flutterid);
             
             $.ajax({
                 url: "http://localhost:8080/submit",
+                // url: "#",
                 type: "POST",
                 data: {
                     _token: csrfToken,
-                    url: url
+                    url: url,
+                    flutterid: flutterid
                 },
                 beforeSend: function() {
                     // Mengganti tombol submit dengan spinner
@@ -622,7 +632,8 @@
                                 _token: csrfToken,
                                 success_tests: JSON.stringify(resultData.successTests),
                                 failed_tests: JSON.stringify(resultData.failedTests), 
-                                score: resultData.score
+                                score: resultData.score,
+                                flutterid: flutterid
                             },
                         success: function(response) {
                             console.log('Data berhasil dikirim ke server:', response);
